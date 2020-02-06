@@ -2,17 +2,35 @@
 - name: Drupal 8 installation.
   hosts: drupal
   become: yes
-  # remote_user: root
   tasks: 
     - name: Update the package index
       apt:
         update_cache: yes
       run_once: true
-    - name: Ensure php is installed
+    - name: Ensure that net-tools packege is installed
       apt:
-        name: php7.2
-        # force: yes
+        name: net-tools
         state: present
-
-
-    
+    - name: Ensure php libraries are installed
+      apt:
+        pkg:
+        - php7.2
+        - php7.2-mbstring
+        - php7.2-mysql
+        - php7.2-xml
+        - php7.2-zip
+        - php7.2-bz2
+        - php7.2-bcmath
+        - php7.2-curl
+        - php7.2-fpm
+        - php7.2-gd
+        - php7.2-imap
+        state: present
+    - name: Ensure the server MySQL is installed.
+      apt:
+        name: mysql-server
+        state: present
+    - name: Ensure the web server Apache2 is installed.
+      apt:
+        name: apache2
+        state: present
