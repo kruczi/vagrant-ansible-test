@@ -1,0 +1,21 @@
+---
+# PHP libraries installation.
+- name: Update the package index
+  apt:
+    update_cache: yes
+  run_once: true
+- name: Ensure PHP libraries are installed
+  apt:
+    pkg:
+    - php7.2
+    - php7.2-mbstring
+    - php7.2-mysql
+    - php7.2-xml
+    - php7.2-zip
+    - php7.2-bz2
+    - php7.2-bcmath
+    - php7.2-curl
+    - php7.2-fpm
+    - php7.2-gd
+    - php7.2-imap
+    state: present

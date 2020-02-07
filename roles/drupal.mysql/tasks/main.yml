@@ -1,0 +1,6 @@
+---
+# MySQL installation.
+- name: Ensure the server MySQL is installed
+  apt:
+    name: mysql-server
+    state: present

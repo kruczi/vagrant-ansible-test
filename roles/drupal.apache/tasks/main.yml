@@ -1,0 +1,6 @@
+---
+# Apache installation.
+- name: Ensure the web server Apache2 is installed
+  apt:
+    name: apache2
+    state: present
