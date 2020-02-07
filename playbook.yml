@@ -1,8 +1,10 @@
 ---
 - name: Drupal 8 installation.
   hosts: drupal
+  vars:
+      dedicated_id: 1111
   become: yes
-  tasks: 
+  tasks:
     - name: Update the package index
       apt:
         update_cache: yes
@@ -26,11 +28,32 @@
         - php7.2-gd
         - php7.2-imap
         state: present
-    - name: Ensure the server MySQL is installed.
+    - name: Ensure the server MySQL is installed
       apt:
         name: mysql-server
         state: present
-    - name: Ensure the web server Apache2 is installed.
+    - name: Ensure the web server Apache2 is installed
       apt:
         name: apache2
         state: present
+    - name: Ensure group "tomtom" exists
+      group:
+        name: tomtom
+        gid: "{{ dedicated_id }}"
+        state: present
+    - name: Ensure if user "tomtom" exists
+      user:
+        name: tomtom
+        uid: "{{ dedicated_id }}"
+        shell: /bin/bash
+        group: tomtom
+        append: yes
+    - name: Ensure if user "tomtom.dev" exists
+      user:
+        name: tomtom.dev
+        uid: "{{ dedicated_id }}"
+        home: /home/tomtom
+        shell: /bin/bash
+        group: tomtom
+        append: yes
+        non_unique: yes
